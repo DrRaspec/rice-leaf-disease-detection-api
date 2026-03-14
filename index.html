@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Windows</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0078d7;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10vh 12vw;
+    overflow: hidden;
+    cursor: none;
+  }
+
+  .sad-face {
+    font-size: 9vw;
+    margin-bottom: 4vh;
+    animation: fadeIn 0.5s ease;
+  }
+
+  h1 {
+    font-size: 3.8vw;
+    font-weight: 300;
+    margin-bottom: 4vh;
+    animation: fadeIn 0.8s ease;
+    line-height: 1.2;
+  }
+
+  .desc {
+    font-size: 1.15vw;
+    max-width: 55vw;
+    line-height: 1.8;
+    margin-bottom: 4vh;
+    animation: fadeIn 1s ease;
+    font-weight: 300;
+  }
+
+  .progress-area {
+    margin-bottom: 4vh;
+    animation: fadeIn 1.2s ease;
+  }
+
+  .progress-label {
+    font-size: 1.2vw;
+    margin-bottom: 1.5vh;
+    font-weight: 300;
+  }
+
+  .progress-bar-bg {
+    width: 30vw;
+    height: 6px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: white;
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  .stop-code {
+    font-size: 1vw;
+    font-weight: 300;
+    animation: fadeIn 1.3s ease;
+    opacity: 0.85;
+    margin-bottom: 1.5vh;
+  }
+
+  .more-info {
+    font-size: 0.9vw;
+    opacity: 0.7;
+    font-weight: 300;
+    animation: fadeIn 1.4s ease;
+  }
+
+  .qr-placeholder {
+    position: absolute;
+    right: 12vw;
+    bottom: 18vh;
+    width: 100px;
+    height: 100px;
+    opacity: 0.6;
+    animation: fadeIn 1.5s ease;
+  }
+
+  .qr-placeholder svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Escape hint - hidden until user presses ESC area */
+  #escape-hint {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 10px;
+    opacity: 0;
+    color: rgba(255,255,255,0.3);
+    cursor: default;
+    transition: opacity 0.3s;
+    user-select: none;
+  }
+  #escape-hint:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="sad-face">:(</div>
+
+<h1>Your PC ran into a problem and<br>needs to restart.</h1>
+
+<p class="desc">
+  We're just collecting some error info, and then we'll restart for you.<br>
+  If you'd like to know more, you can search online later for this error:
+  <strong>CRITICAL_PROCESS_DIED</strong>
+</p>
+
+<div class="progress-area">
+  <div class="progress-label" id="progress-text">0% complete</div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progress-bar"></div>
+  </div>
+</div>
+
+<p class="stop-code">Stop code: CRITICAL_PROCESS_DIED</p>
+<p class="more-info">What failed: ntoskrnl.exe</p>
+
+<!-- Fake QR code graphic -->
+<div class="qr-placeholder">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="white" opacity="0.7">
+    <rect x="5" y="5" width="30" height="30" rx="2" fill="none" stroke="white" stroke-width="5"/>
+    <rect x="12" y="12" width="16" height="16"/>
+    <rect x="65" y="5" width="30" height="30" rx="2" fill="none" stroke="white" stroke-width="5"/>
+    <rect x="72" y="12" width="16" height="16"/>
+    <rect x="5" y="65" width="30" height="30" rx="2" fill="none" stroke="white" stroke-width="5"/>
+    <rect x="12" y="72" width="16" height="16"/>
+    <rect x="45" y="5" width="6" height="6"/><rect x="55" y="5" width="6" height="6"/>
+    <rect x="45" y="15" width="6" height="6"/><rect x="55" y="25" width="6" height="6"/>
+    <rect x="45" y="45" width="6" height="6"/><rect x="55" y="45" width="6" height="6"/>
+    <rect x="65" y="45" width="6" height="6"/><rect x="75" y="45" width="6" height="6"/>
+    <rect x="85" y="45" width="6" height="6"/><rect x="65" y="55" width="6" height="6"/>
+    <rect x="75" y="55" width="6" height="6"/><rect x="85" y="55" width="6" height="6"/>
+    <rect x="65" y="65" width="6" height="6"/><rect x="75" y="65" width="6" height="6"/>
+    <rect x="85" y="75" width="6" height="6"/><rect x="65" y="85" width="6" height="6"/>
+    <rect x="75" y="85" width="6" height="6"/><rect x="85" y="85" width="6" height="6"/>
+    <rect x="45" y="55" width="6" height="6"/><rect x="45" y="65" width="6" height="6"/>
+    <rect x="55" y="75" width="6" height="6"/><rect x="45" y="85" width="6" height="6"/>
+  </svg>
+</div>
+
+<div id="escape-hint">press esc to exit</div>
+
+<script>
+  // Progress bar animation — slowly fills to 100%, then "restarts"
+  let pct = 0;
+  const bar = document.getElementById('progress-bar');
+  const label = document.getElementById('progress-text');
+
+  // Random slow speed to feel real
+  function tick() {
+    if (pct < 100) {
+      let increment = Math.random() * 1.5 + 0.2;
+      pct = Math.min(100, pct + increment);
+      bar.style.width = pct + '%';
+      label.textContent = Math.floor(pct) + '% complete';
+
+      // Slow down near certain points like a real BSOD
+      let delay = 300;
+      if (pct > 85) delay = 600;
+      if (pct > 95) delay = 1200;
+
+      setTimeout(tick, delay);
+    } else {
+      label.textContent = 'Restarting...';
+      setTimeout(() => {
+        // "Restart" — just reload the page for endless loop effect
+        pct = 0;
+        bar.style.width = '0%';
+        label.textContent = '0% complete';
+        setTimeout(tick, 1500);
+      }, 2000);
+    }
+  }
+
+  // Auto fullscreen on any interaction (browsers require user gesture)
+  function goFullscreen() {
+    const el = document.documentElement;
+    if (el.requestFullscreen) el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    else if (el.mozRequestFullScreen) el.mozRequestFullScreen();
+    else if (el.msRequestFullscreen) el.msRequestFullscreen();
+  }
+
+  // Try immediately (works in some browsers), fallback to first interaction
+  try { goFullscreen(); } catch(e) {}
+  document.addEventListener('click', goFullscreen, { once: true });
+  document.addEventListener('keydown', function fsKey(e) {
+    if (e.key !== 'Escape') { goFullscreen(); document.removeEventListener('keydown', fsKey); }
+  });
+
+  // Overlay to capture first click and trigger fullscreen
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;cursor:none;';
+  overlay.addEventListener('click', () => { goFullscreen(); overlay.remove(); }, { once: true });
+  document.body.appendChild(overlay);
+
+  setTimeout(tick, 1200);
+
+  // Allow friend to escape by pressing Escape 3 times quickly
+  let escCount = 0;
+  let escTimer;
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      escCount++;
+      clearTimeout(escTimer);
+      if (escCount >= 3) {
+        document.body.style.background = '#1a1a2e';
+        document.body.innerHTML = `
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#00ff88;text-align:center;">
+            <div style="font-size:60px;margin-bottom:20px">😂</div>
+            <div style="font-size:32px;font-weight:bold;margin-bottom:12px">GOTCHA!</div>
+            <div style="font-size:16px;opacity:0.7">This was just a prank. Your PC is totally fine!</div>
+          </div>`;
+      } else {
+        escTimer = setTimeout(() => { escCount = 0; }, 1000);
+      }
+    }
+  });
+</script>
+</body>
+</html>
